@@ -12,6 +12,15 @@ def atan_norm(x):
     """
     return (math.atan(x) * 2 / math.pi) + 1
 
-def min_max_norm(x):
+def min_max_norm(x, min, max):
+    """Constrains the weights incident to each hidden unit to have the norm between a lower bound and an upper bound.
 
-    return x
+    Args:
+        x (float): Count value.
+        min (int): Minimum value in count vector.
+        max (int): Maximum value in count vector.
+
+    Returns:
+        float: A norm between a lower bound and an upper bound.
+    """
+    return (x - min) / (max - min)
