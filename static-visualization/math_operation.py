@@ -11,3 +11,7 @@ def atan_norm(x):
         float: arctan norm of the x value.
     """
     return (math.atan(x) * 2 / math.pi) + 1
+
+def min_max_norm(x):
+
+    return x

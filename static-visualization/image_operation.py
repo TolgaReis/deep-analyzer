@@ -19,10 +19,10 @@ def count_vector(decimal_vector):
     """Constructs a count vector based on the occurrence of numbers in the decimal vector (byte frequency)
 
     Args:
-        decimal_vector ([integer]): 8-bit unsigned integers read from the binary.
+        decimal_vector ([int]): 8-bit unsigned integers read from the binary.
 
     Returns:
-        [integer]: Byte frequency vector.
+        [int]: Byte frequency vector.
     """
     count_vector = [decimal_vector.count(byte) for byte in range(0, 256)]
 
