@@ -1,29 +1,55 @@
-import os 
+import math_operation
+import numpy as np
 
-def decimal_vector(filename):
-    """Reads the binary file that is given as parameter and converts it to decimal integer list. 
+def create_decimal_vector(filename):
+    """Reads the binary file that is given as parameter and
+       converts it to decimal integer list.
 
     Args:
         filename (string): The name of the file that is read.
     """
 
-    decimal_vector = list()
+    vector = list()
     with open(filename, 'rb') as binary_file:
         binary_data = binary_file.read(1)
         while binary_data != b'':
-            decimal_vector.append(ord(binary_data))
+            vector.append(ord(binary_data))
             binary_data = binary_file.read(1)
-    return decimal_vector
+    return vector
 
-def count_vector(decimal_vector):
-    """Constructs a count vector based on the occurrence of numbers in the decimal vector (byte frequency)
+def create_count_vector(vector):
+    """Constructs a count vector based on the occurrence of
+       numbers in the decimal vector (byte frequency)
 
     Args:
-        decimal_vector ([int]): 8-bit unsigned integers read from the binary.
+        decimal_vector ([int]): 8-bit unsigned integers read
+        from the binary.
 
     Returns:
         [int]: Byte frequency vector.
     """
-    count_vector = [decimal_vector.count(byte) for byte in range(0, 256)]
 
-    return count_vector
+    return [vector.count(byte) for byte in range(0, 256)]
+
+def create_pixel_vector(count_vector, decimal_vector):
+    """Takes count and decimal vectors, then returns the pixel vector.
+
+    Args:
+        count_vector ([int]): Number of the counts of the bytes.
+        decimal_vector ([type]): Vector of the bytes in file.
+
+    Returns:
+        np.array: RGB pixel vector as np.array type.
+    """
+    count_vector = [math_operation.atan_norm(element) for element in count_vector]
+    min_value = min(count_vector)
+    max_value = max(count_vector)
+    count_vector = [math_operation.beta(element, min_value, max_value) for element in count_vector]
+
+    red_channel = decimal_vector
+    green_channel = [0] * len(decimal_vector)
+    blue_channel = [count_vector[element] for element in decimal_vector]
+
+    pixel_vector = np.array([red_channel, green_channel, blue_channel])
+
+    return pixel_vector

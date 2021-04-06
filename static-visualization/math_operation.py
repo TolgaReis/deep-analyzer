@@ -1,26 +1,42 @@
 import math
+from config import Config
 
-def atan_norm(x):
-    """The arctan function grows more and more slowly as its input increases, 
-       so it is applied in hope of reducing the influence of possible outliers.
+def atan_norm(value):
+    """The arctan function grows more and more slowly as its input
+       increases, so it is applied in hope of reducing the influence
+       of possible outliers.
 
     Args:
-        x (int): Byte frequency of a byte integer between 0-255.
+        value (int): Byte frequency of a byte integer between 0-255.
 
     Returns:
         float: arctan norm of the x value.
     """
-    return (math.atan(x) * 2 / math.pi) + 1
+    return (math.atan(value) * (2.0 / math.pi)) + 1.0
 
-def min_max_norm(x, min, max):
-    """Constrains the weights incident to each hidden unit to have the norm between a lower bound and an upper bound.
+def min_max_norm(value, min_val, max_val):
+    """Constrains the weights incident to each hidden unit to have
+       the norm between a lower bound and an upper bound.
 
     Args:
-        x (float): Count value.
-        min (int): Minimum value in count vector.
-        max (int): Maximum value in count vector.
+        value (float): Count value.
+        min_val (int): Minimum value in count vector.
+        max_val (int): Maximum value in count vector.
 
     Returns:
         float: A norm between a lower bound and an upper bound.
     """
-    return (x - min) / (max - min)
+    return (value - min_val) / (max_val - min_val)
+
+def beta(value, min_val, max_val):
+    """[summary]
+
+    Args:
+        value ([type]): [description]
+        min_val ([type]): [description]
+        max_val ([type]): [description]
+
+    Returns:
+        [type]: [description]
+    """
+    return math.floor(min_max_norm(value, min_val, max_val) * (-Config.MAX_UNSIGNED_BYTE_VAL) + Config.MAX_UNSIGNED_BYTE_VAL)
