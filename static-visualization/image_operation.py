@@ -41,6 +41,15 @@ def create_pixel_vector(count_vector, decimal_vector):
     Returns:
         np.array: RGB pixel vector as np.array type.
     """
-    pixel_vector = np.array([decimal_vector, [count_vector[byte] for byte in decimal_vector], [0 for byte in decimal_vector]])
-    
+    count_vector = [math_operation.atan_norm(element) for element in count_vector]
+    min_value = min(count_vector)
+    max_value = max(count_vector)
+    count_vector = [math_operation.beta(element, min_value, max_value) for element in count_vector]
+
+    red_channel = decimal_vector
+    green_channel = [0] * len(decimal_vector)
+    blue_channel = [count_vector[element] for element in decimal_vector]
+
+    pixel_vector = np.array([red_channel, green_channel, blue_channel])
+
     return pixel_vector

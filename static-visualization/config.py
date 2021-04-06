@@ -1,4 +1,3 @@
-
 class Config:
     """Used for general configuration values.
     """

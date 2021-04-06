@@ -12,7 +12,7 @@ def atan_norm(value):
     Returns:
         float: arctan norm of the x value.
     """
-    return (math.atan(value) * 2.0 / math.pi) + 1.0
+    return (math.atan(value) * (2.0 / math.pi)) + 1.0
 
 def min_max_norm(value, min_val, max_val):
     """Constrains the weights incident to each hidden unit to have
@@ -29,5 +29,14 @@ def min_max_norm(value, min_val, max_val):
     return (value - min_val) / (max_val - min_val)
 
 def beta(value, min_val, max_val):
-    return math.floor(value / 255)
-    #return math.floor(min_max_norm(atan_norm(value), min_val, max_val) * (-Config.MAX_UNSIGNED_BYTE_VAL) + Config.MAX_UNSIGNED_BYTE_VAL)
+    """[summary]
+
+    Args:
+        value ([type]): [description]
+        min_val ([type]): [description]
+        max_val ([type]): [description]
+
+    Returns:
+        [type]: [description]
+    """
+    return math.floor(min_max_norm(value, min_val, max_val) * (-Config.MAX_UNSIGNED_BYTE_VAL) + Config.MAX_UNSIGNED_BYTE_VAL)
