@@ -1,15 +1,25 @@
 import image_operation
-from PIL import Image
-import time
+import os
+from config import Config
 
 def main():
     """[summary]
     """
-    decimal_vector, count_vector = image_operation.create_vectors('files/rufus.exe')
-    pixel_vector = image_operation.create_pixel_vector(count_vector, decimal_vector)
-    img = Image.fromarray(pixel_vector, 'RGB')
-    img = img.resize((512, 512))
-    img.save('data/benign/rufus.jpeg')
+    owd = os.getcwd()
+    os.chdir(Config.FILES_BENIGN)
+    for file in os.listdir():
+        decimal_vector, count_vector = image_operation.create_vectors(file)
+        pixel_vector = image_operation.create_pixel_vector(count_vector, decimal_vector)
+        os.chdir(owd)
+        image_operation.save_image(pixel_vector, Config.DATA_TYPES[1], file)
+
+    owd = os.getcwd()
+    os.chdir(Config.FILES_BENIGN)
+    for file in os.listdir():
+        decimal_vector, count_vector = image_operation.create_vectors(file)
+        pixel_vector = image_operation.create_pixel_vector(count_vector, decimal_vector)
+        os.chdir(owd)
+        image_operation.save_image(pixel_vector, Config.DATA_TYPES[0], file)
 
 if __name__ == "__main__":
     main()
