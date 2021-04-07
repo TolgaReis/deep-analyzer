@@ -1,6 +1,27 @@
 import math_operation
 import numpy as np
 from config import Config
+from PIL import Image
+
+def save_image(pixel_vector, data_type, filename):
+    """Saves image to malware or benign data directory according to parameter.
+
+    Args:
+        pixel_vector (np.array): Numpy array that holds the pixels of the image.
+        data_type (str): Provides the data type information to save image right
+                         directory.
+        filename (str): Used to save image with prior file name.
+
+    Raises:
+        Exception: If the file type invalid, then raises exception.
+    """
+    img = Image.fromarray(pixel_vector, 'RGB')
+    img = img.resize((512, 512))
+
+    if data_type in Config.DATA_TYPES:
+        img.save(Config.DATA_DIR % (data_type, filename))
+    else:
+        raise Exception
 
 def create_vectors(filename):
     """Reads the binary file that is given as parameter and
@@ -21,7 +42,7 @@ def create_vectors(filename):
 
     return decimal_vector, count_vector
 
-def create_pixel_vector(count_vector, decimal_vector):
+def create_pixel_vector(file):
     """Takes count and decimal vectors, then returns the pixel vector.
 
     Args:
@@ -31,6 +52,8 @@ def create_pixel_vector(count_vector, decimal_vector):
     Returns:
         np.array: RGB pixel vector as np.array type.
     """
+    count_vector, decimal_vector = create_vectors(file)
+
     count_vector = [math_operation.atan_norm(element) for element in count_vector]
     min_value = min(count_vector)
     max_value = max(count_vector)
