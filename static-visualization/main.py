@@ -4,8 +4,12 @@ import image_operation
 from config import Config
 
 def main():
-    """[summary]
+    """The main method of the project that runs it.
     """
+
+    # TODO:
+    # 1. Uploading files to drive.
+    # 2. Not to save images in project.
 
     benign_file_list = os.listdir(Config.FILES_BENIGN_UNCONVERTED)
     malware_file_list = os.listdir(Config.FILES_MALWARE_UNCONVERTED)
