@@ -29,14 +29,15 @@ def min_max_norm(value, min_val, max_val):
     return (value - min_val) / (max_val - min_val)
 
 def beta(value, min_val, max_val):
-    """[summary]
+    """Rounds to down the normalized value.
 
     Args:
-        value ([type]): [description]
-        min_val ([type]): [description]
-        max_val ([type]): [description]
+        value (int): Value that is wanted to normalize.
+        min_val (float): Minimum value of the count vector.
+        max_val (float): Maximum value of the count vector.
 
     Returns:
-        [type]: [description]
+        str: Rounded down of the normalized value.
     """
     return math.floor(min_max_norm(value, min_val, max_val) * (-Config.MAX_UNSIGNED_BYTE_VAL) + Config.MAX_UNSIGNED_BYTE_VAL)
+
